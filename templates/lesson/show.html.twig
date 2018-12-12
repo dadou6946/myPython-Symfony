@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ lesson.title}} | My Python{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>{{ lesson.title | nl2br }}</h1>
+        <p>{{ lesson.grade }}</p>
+        <p>{{ lesson.type }}</p>
+        <p>{{ lesson.subject }}</p>
+        <p>{{ lesson.content }}</p>
+    </div>
+
+{% endblock %}

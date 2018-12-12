@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cours{% endblock %}
+
+{% block body %}
+    <div class="jumbotron text-center">
+        <h1>Cours</h1>
+
+    </div>
+    <div class="container">
+        <h2 class="text-center">Derniers cours</h2>
+        <div class="row flex">
+            {% for lesson in lessons  %}
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+                                <a href="{{ path('lesson.show', {id: lesson.id, slug: lesson.slug}) }}">{{ lesson.title }}</a>
+                            </h5>
+                            <p class="card-text primary">
+                                {{ lesson.grade }} : {{ lesson.type }}
+                            </p>
+                            <p class="card-text">{{ lesson.content }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

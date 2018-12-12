@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les cours{% endblock %}
+
+{% block body %}
+    <div class="jumbotron text-center">
+        <h1>Gérer les cours</h1>
+    </div>
+    <div class="container">
+        {% for message in app.flashes("success") %}
+            <div class="alert alert-success text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for lesson in lessons %}
+                <tr>
+                    <td>{{ lesson.title }}</td>
+                    <td>
+                        <a href="{{ path('admin.lesson.edit', {id: lesson.id}) }}" class="btn btn-primary">Editer</a>
+                        <form method="post" action="{{ path('admin.lesson.delete', {id: lesson.id}) }}" style="display: inline-block;" onsubmit="return confirm('Voulez-vous vraiement supprimer ce cours ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ lesson.id ) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="text-center">
+            <a href="{{ path("admin.lesson.new") }}" class="btn btn-primary">Créer un cours</a>
+        </div>
+    </div>
+
+{% endblock %}

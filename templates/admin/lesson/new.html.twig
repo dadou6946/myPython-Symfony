@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un cours{% endblock %}
+
+{% block body %}
+    <div class="jumbotron text-center">
+        <h1>Créer un nouveau cours</h1>
+
+    </div>
+    {{ include("admin/lesson/_form.html.twig", {form: form, button: "Créer"}) }}
+{% endblock %}
