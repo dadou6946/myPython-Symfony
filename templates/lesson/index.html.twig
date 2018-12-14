@@ -4,28 +4,40 @@
 
 {% block body %}
     <div class="jumbotron text-center">
-        <h1>Cours</h1>
-
-    </div>
-    <div class="container">
-        <h2 class="text-center">Derniers cours</h2>
-        <div class="row flex">
-            {% for lesson in lessons  %}
-                <div class="col-3">
-                    <div class="card">
-                        <div class="card-body">
-
-                            <h5 class="card-title">
-                                <a href="{{ path('lesson.show', {id: lesson.id, slug: lesson.slug}) }}">{{ lesson.title }}</a>
-                            </h5>
-                            <p class="card-text primary">
-                                {{ lesson.grade }} : {{ lesson.type }}
-                            </p>
-                            <p class="card-text">{{ lesson.content }}</p>
-                        </div>
+        <div class="container">
+            {{ form_start(form) }}
+                <div class="form-row align-items-end">
+                    <div class="col">
+                        {{ form_row(form.grade) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.type) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.subject) }}
+                    </div>
+                    <div class="col form-group">
+                        <button class="btn btn-primary">Rechercher</button>
                     </div>
                 </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <div class="container">
+        <h1 class="text-center">Tous les cours</h1>
+
+        <div class="row flex mt-5">
+
+            {% for lesson in lessons  %}
+                <div class="col-3">
+                    {% include "lesson/_lesson.html.twig"  %}
+                </div>
             {% endfor %}
+
+        </div>
+
+        <div class="pagination">
+            {{ knp_pagination_render(lessons) }}
         </div>
     </div>
 

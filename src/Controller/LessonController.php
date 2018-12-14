@@ -3,9 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Lesson;
+use App\Entity\LessonSearch;
+use App\Form\LessonSearchType;
 use App\Repository\LessonRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -27,12 +31,23 @@ class LessonController extends AbstractController
      * @Route("/lesson", name="lesson.index")
      * @return Response
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $lessons = $this->repository->findLatestPython();
+        // Création d'une entité représentant la recherche
+        $search = new LessonSearch();
+        // Création du formulaire
+        $form = $this->createForm(LessonSearchType::class, $search);
+        $form->handleRequest($request);
+        // Gérer le trairement dans le controlller
+        $lessons =$paginator->paginate(
+            $this->repository->findAllPythonQuery($search),
+            $request->query->getInt('page', 1),
+            12
+        );
         dump($lessons);
         return $this->render('lesson/index.html.twig', [
-            'lessons' => $lessons
+            'lessons' => $lessons,
+            'form' => $form->createView()
         ]);
         //$l[0]->setTitle('Premier cours');
         //$this->om->flush();

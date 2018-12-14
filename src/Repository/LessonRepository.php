@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Lesson;
+use App\Entity\LessonSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -32,13 +34,38 @@ class LessonRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Lesson[]
+     * @return Query
      */
-    public function findAllPython():array
+    public function findAllPythonQuery(LessonSearch $search): Query
     {
-        return $this->findFieldLike('subject', 'python')
-            ->getQuery()
-            ->getResult();
+        $query = $this->findVisibleQuery();
+
+        if($search->getGrade())
+        {
+            $query = $query->andWhere('l.grade = :grade')
+                ->setParameter('grade', $search->getGrade());
+        }
+        if($search->getType())
+        {
+            $query = $query->andWhere('l.type = :type')
+                ->setParameter('type', $search->getType());
+        }
+        if($search->getSubject())
+        {
+            $query = $query->andWhere('l.subject = :subject')
+                ->setParameter('subject', $search->getSubject());
+        }
+
+        return $query->getQuery();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function findVisibleQuery(): \Doctrine\ORM\QueryBuilder
+    {
+        return $this->createQueryBuilder('l')
+            ->where('l.state = true');
     }
 
     /**
