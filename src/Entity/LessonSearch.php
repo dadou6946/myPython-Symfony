@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class LessonSearch
@@ -14,6 +15,19 @@ class LessonSearch
      * @var string|null
      */
     private $type;
+
+    /**
+     * @var ArrayCollection
+     */
+    private $tags;
+
+    /**
+     * LessonSearch constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * @return string|null
@@ -72,6 +86,22 @@ class LessonSearch
     {
         $this->subject = $subject;
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTags(): ArrayCollection
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param ArrayCollection $tags
+     */
+    public function setTags(ArrayCollection $tags): void
+    {
+        $this->tags = $tags;
     }
 
 

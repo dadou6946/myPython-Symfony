@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Lesson;
+use App\Entity\Tag;
 use App\Form\LessonType;
 use App\Repository\LessonRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -45,7 +46,7 @@ class AdminLessonController extends AbstractController
     }
 
     /** Edition de cours
-     * @Route("admin/{id}", name="admin.lesson.edit", methods="GET|POST")
+     * @Route("admin/lesson/{id}", name="admin.lesson.edit", methods="GET|POST")
      * @param Lesson $lesson
      * @param Request $request
      * @param ObjectManager $om

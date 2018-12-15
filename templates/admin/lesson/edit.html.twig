@@ -3,11 +3,17 @@
 {% block title %}Editer un cours{% endblock %}
 
 {% block body %}
+
     <div class="jumbotron text-center">
         <h1>Editer un cours</h1>
 
     </div>
     {{ include("admin/lesson/_form.html.twig", {form: form, button: "Editer"}) }}
 
-
 {% endblock %}
+
+{%  block stylesheets %}
+{%  endblock %}
+
+{% block javascripts %}
+{%  endblock %}

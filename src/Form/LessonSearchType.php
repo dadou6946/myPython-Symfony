@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\LessonSearch;
+use App\Entity\Tag;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -42,6 +44,13 @@ class LessonSearchType extends AbstractType
                     "html" => "html",
                     "css" => "css",
                 ]
+            ])
+            ->add('tags', EntityType::class, [
+                "required" => false,
+                "label" => "Tags",
+                "class" => Tag::class,
+                "choice_label" => "name",
+                "multiple" => true
             ])
         ;
     }

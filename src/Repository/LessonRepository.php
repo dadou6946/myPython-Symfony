@@ -56,6 +56,18 @@ class LessonRepository extends ServiceEntityRepository
                 ->setParameter('subject', $search->getSubject());
         }
 
+        if($search->getTags()->count() > 0)
+        {
+            $k = 0;
+            foreach ($search->getTags() as $k => $tag)
+            {
+                $k++;
+                $query = $query
+                    ->andWhere(":tag$k MEMBER OF l.tags")
+                    ->setParameter("tag$k", $tag);
+            }
+        }
+
         return $query->getQuery();
     }
 

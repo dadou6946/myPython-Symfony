@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Lesson;
+use App\Entity\Tag;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,6 +18,11 @@ class LessonType extends AbstractType
             ->add('title')
             ->add('seo_title')
             ->add('picture')
+            ->add('tags', EntityType::class, [
+                "class" => Tag::class,
+                "choice_label" => "name",
+                "multiple" => true
+            ])
             ->add('content')
             ->add('grade', ChoiceType::class, [
                 "choices" => [
