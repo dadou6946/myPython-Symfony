@@ -4,11 +4,34 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>{{ lesson.title | nl2br }}</h1>
-        <p>{{ lesson.grade }}</p>
-        <p>{{ lesson.type }}</p>
-        <p>{{ lesson.subject }}</p>
-        <p>{{ lesson.content }}</p>
+        <div class="row">
+            <div class="col">
+                {% if lesson.filename %}
+                    <img src="{{ vich_uploader_asset(lesson, 'imageFile')| imagine_filter('medium') }}" alt="card-img-top" style="width: 100%; height: auto;">
+                {% else %}
+                    <img src="{{ 'assets/image/default.jpg'| imagine_filter('medium') }}" alt="card-img-top" style="width: 100%; height: auto;">
+                {% endif %}
+            </div>
+            <div class="col">
+                <h1>{{ lesson.title | nl2br }}</h1>
+
+                <ul>
+                    <li><p>{{ lesson.grade }}</p></li>
+                    <li><p>{{ lesson.type }}</p></li>
+                    <li><p>{{ lesson.subject }}</p></li>
+                    <li><p>{{ lesson.content }}</p></li>
+                </ul>
+
+                <h3>Tags</h3>
+                <ul class="list-group">
+                    {% for tag in lesson.tags %}
+                        <li class="list-group-item">{{ tag.name }}</li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+        </div>
     </div>
 
 {% endblock %}

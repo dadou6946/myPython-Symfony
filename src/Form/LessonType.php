@@ -7,6 +7,7 @@ use App\Entity\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,9 +18,12 @@ class LessonType extends AbstractType
         $builder
             ->add('title')
             ->add('seo_title')
-            ->add('picture')
+            ->add('imageFile', FileType::class, [
+                "required" => false
+            ])
             ->add('tags', EntityType::class, [
                 "class" => Tag::class,
+                "required" => false,
                 "choice_label" => "name",
                 "multiple" => true
             ])
